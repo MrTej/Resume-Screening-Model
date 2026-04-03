@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Screening</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .container { max-width: 600px; margin: auto; }
+        input[type="file"] { margin-top: 20px; }
+        .result-box { background: #f6f6f6; padding: 15px; margin-top: 20px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Upload Resume (PDF)</h2>
+
+    <form action="/screen" method="post" enctype="multipart/form-data">
+        <input type="file" name="resume" required>
+        <br><br>
+        <button type="submit">Analyze Resume</button>
+    </form>
+
+    {% if results %}
+    <div class="result-box">
+        <h3>Top Match: {{ top.category }} (Score: {{ "%.4f"|format(top.score) }})</h3>
+
+        <h4>Full Ranking:</h4>
+        <ul>
+            {% for r in results %}
+            <li>{{ r.category }} — Score: {{ "%.4f"|format(r.score) }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
